@@ -1,9 +1,10 @@
 sudo: required
-language: c
+language: python
 
 env:
   global:
     - DOCKER_IMAGE=alectolytic/rpmbuilder
+    -  rpmbuild/centos7
     - COPR_REPOSITORY=ov-manager
     - OS_ARCH=x86_64
   matrix:
