@@ -1,27 +1,58 @@
+#sudo: required
+#language: python
+
+#env:
+ # global:
+  #  - DOCKER_IMAGE=alectolytic/rpmbuilder
+   # - COPR_REPOSITORY=ov-manager
+    #- OS_ARCH=x86_64
+  #matrix:
+   # - OS_TYPE=centos OS_DIST=epel OS_VERSION=7
+    #- OS_TYPE=fedora OS_DIST=fedora OS_VERSION=26
+    #- OS_TYPE=fedora OS_DIST=fedora OS_VERSION=27
+    #- OS_TYPE=fedora OS_DIST=fedora OS_VERSION=28
+
+#services:
+#  - docker
+
+#install: true
+
+#script:
+#  - docker run -v ${PWD}:/sources -v ${PWD}:/output:Z -e "SRPM_ONLY=1" ${DOCKER_IMAGE}:${OS_TYPE}-${OS_VERSION}
+
+#after_success:
+#  - pip install copr-cli simplejson 
+#  - openssl aes-256-cbc -K $encrypted_ef53a166f876_key -iv $encrypted_ef53a166f876_iv -in .copr.enc -out .copr -d
+#  - copr-cli --config .copr build -r ${OS_DIST}-${OS_VERSION}-${OS_ARCH} ${COPR_REPOSITORY} *.src.rpm || sleep 15 && exit 1
+  #- if [ ! -z "${TRAVIS_TAG}" ]; then copr-cli --config .copr build -r ${OS_DIST}-${OS_VERSION}-${OS_ARCH} ${COPR_REPOSITORY} *.src.rpm || exit 1; fi
+
+## Testing PackPack
 sudo: required
-language: python
-
-env:
-  global:
-    - DOCKER_IMAGE=alectolytic/rpmbuilder
-    - COPR_REPOSITORY=ov-manager
-    - OS_ARCH=x86_64
-  matrix:
-    - OS_TYPE=centos OS_DIST=epel OS_VERSION=7
-    - OS_TYPE=fedora OS_DIST=fedora OS_VERSION=26
-    - OS_TYPE=fedora OS_DIST=fedora OS_VERSION=27
-    - OS_TYPE=fedora OS_DIST=fedora OS_VERSION=28
-
 services:
   - docker
 
-install: true
+cache:
+    directories:
+     - $HOME/.cache
+
+language: C
+
+env:
+    global:
+      - COPR_REPOSITORY=ov-manager
+    matrix:
+      - OS=el DIST=7
+      - OS=fedora DIST=28
+      - OS=fedora DIST=29
 
 script:
-  - docker run -v ${PWD}:/sources -v ${PWD}:/output:Z -e "SRPM_ONLY=1" ${DOCKER_IMAGE}:${OS_TYPE}-${OS_VERSION}
-
+ - git submodule update --init --recursive
+ - git describe --long
+ - git clone https://github.com/packpack/packpack.git packpack
+ - packpack/packpack
+ 
 after_success:
   - pip install copr-cli simplejson 
   - openssl aes-256-cbc -K $encrypted_ef53a166f876_key -iv $encrypted_ef53a166f876_iv -in .copr.enc -out .copr -d
-  - copr-cli --config .copr build -r ${OS_DIST}-${OS_VERSION}-${OS_ARCH} ${COPR_REPOSITORY} *.src.rpm || sleep 15 && exit 1
-  #- if [ ! -z "${TRAVIS_TAG}" ]; then copr-cli --config .copr build -r ${OS_DIST}-${OS_VERSION}-${OS_ARCH} ${COPR_REPOSITORY} *.src.rpm || exit 1; fi
+  #- copr-cli --config .copr build -r ${OS_DIST}-${OS_VERSION}-${OS_ARCH} ${COPR_REPOSITORY} *.src.rpm || sleep 15 && exit 1
+  - if [ ! -z "${TRAVIS_TAG}" ]; then copr-cli --config .copr build -r ${OS_DIST}-${OS_VERSION}-${OS_ARCH} ${COPR_REPOSITORY} *.src.rpm || exit 1; fi
