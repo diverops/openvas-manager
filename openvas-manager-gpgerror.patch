@@ -1,0 +1,17 @@
+diff -ru openvas-manager-7.0.1/CMakeLists.txt openvas-manager-7.0.1.new/CMakeLists.txt
+--- openvas-manager-7.0.1/CMakeLists.txt	2017-04-23 23:02:40.621462713 +0200
++++ openvas-manager-7.0.1.new/CMakeLists.txt	2017-04-23 23:07:09.281510916 +0200
+@@ -273,6 +273,13 @@
+     OUTPUT_STRIP_TRAILING_WHITESPACE)
+ endif (NOT GPGME)
+ 
++execute_process (COMMAND gpg-error-config --cflags
++  OUTPUT_VARIABLE GPGERROR_CFLAGS
++  OUTPUT_STRIP_TRAILING_WHITESPACE)
++execute_process (COMMAND gpg-error-config --libs
++  OUTPUT_VARIABLE GPGERROR_LDFLAGS
++  OUTPUT_STRIP_TRAILING_WHITESPACE)
++
+ ## Version
+ 
+ set (OPENVASMD_VERSION "${PROJECT_VERSION_STRING}")
