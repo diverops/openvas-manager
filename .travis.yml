@@ -3,7 +3,7 @@ language: c
 
 env:
   global:
-#    - DOCKER_IMAGE=alectolytic/rpmbuilder
+    - DOCKER_IMAGE=alectolytic/rpmbuilder
     - COPR_REPOSITORY=ov-manager
     - OS_ARCH=x86_64
   matrix:
