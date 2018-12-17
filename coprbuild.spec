@@ -63,7 +63,8 @@ a SQL database (sqlite-based) where all configuration and scan result data is
 centrally stored.
 
 %prep
-%setup -q
+#%setup -q
+setup -n openvas-manager -q
 #%patch0 -p1 -b .notused
 %patch1 -p1 -b .pki
 %patch2 -p1 -b .gpgerror
