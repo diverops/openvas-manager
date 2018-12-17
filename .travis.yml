@@ -25,6 +25,6 @@ after_success:
   - openssl aes-256-cbc -K $encrypted_ef53a166f876_key -iv $encrypted_ef53a166f876_iv -in .copr.enc -out .copr -d
   - travis endpoint
   - copr-cli --config .copr build -r ${OS_DIST}-${OS_VERSION}-${OS_ARCH} ${COPR_REPOSITORY} *.src.rpm
-  - sleep 69
+  - sleep 15
   - exit 1
   #- if [ ! -z "${TRAVIS_TAG}" ]; then copr-cli --config .copr build -r ${OS_DIST}-${OS_VERSION}-${OS_ARCH} ${COPR_REPOSITORY} *.src.rpm || exit 1; fi
