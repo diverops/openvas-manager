@@ -24,7 +24,7 @@ Patch2:		https://raw.githubusercontent.com/diverops/openvas-manager/master/openv
 Patch3:		https://raw.githubusercontent.com/diverops/openvas-manager/master/openvas-manager-bsdsource.patch
 
 BuildRequires:	openvas-libraries-devel >= 7.0
-BuildRequires:	cmake >= 2.6.0
+BuildRequires:	cmake >= 2.8
 BuildRequires:	glib2-devel
 BuildRequires:	sqlite-devel
 BuildRequires:	gnutls-devel
