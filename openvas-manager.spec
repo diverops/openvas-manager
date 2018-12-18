@@ -1,5 +1,3 @@
-#This number is the sequence number on intevation.org to download a file
-#%global	tar_download 2448
 
 Name:		openvas-manager
 Version:	7.0.3
@@ -8,27 +6,25 @@ Summary:	Manager Module for the Open Vulnerability Assessment System (OpenVAS)
 
 License:	GPLv2+
 URL:		http://www.openvas.org
-#Source0:	http://wald.intevation.org/frs/download.php/%{tar_download}/%{name}-%{version}.tar.gz
-#Source0:	http://wald.intevation.org/frs/download.php/%{tar_download}/%{name}-%{tar_version}.tar.gz
-Source0:	https://github.com/greenbone/gvmd/releases/download/v7.0.3/openvas-manager-7.0.3.tar.gz
+Source0:	https://github.com/greenbone/gvmd/archive/v7.0.3.tar.gz
 %if 0%{?rhel} >= 7 || 0%{?fedora} > 15
-Source4:	%{name}.service
+Source4:	https://raw.githubusercontent.com/diverops/openvas-manager/master/openvas-manager.service
 %else
-Source1:	%{name}.initd
+Source1:	https://raw.githubusercontent.com/diverops/openvas-manager/master/openvas-manager.initd
 %endif
-Source2:	%{name}.logrotate
-Source3:	%{name}.sysconfig
+Source2:	https://raw.githubusercontent.com/diverops/openvas-manager/master/openvas-manager.logrotate
+Source3:	https://raw.githubusercontent.com/diverops/openvas-manager/master/openvas-manager.sysconfig
 
 # Put certs to /etc/pki as suggested by http://fedoraproject.org/wiki/PackagingDrafts/Certificates
 # Not reported upstream as it is RedHat/Fedora specific
-Patch1:		%{name}-pki.patch
-Patch2:		%{name}-gpgerror.patch
+Patch1:		https://raw.githubusercontent.com/diverops/openvas-manager/master/openvas-manager-pki.patch
+Patch2:		https://raw.githubusercontent.com/diverops/openvas-manager/master/openvas-manager-gpgerror.patch
 
 # Replace _BSD_SOURCE and _SVID_SOURCE with _DEFAULT_SOURCE otherwise build fails with Werror
-Patch3:		%{name}-bsdsource.patch
+Patch3:		https://raw.githubusercontent.com/diverops/openvas-manager/master/openvas-manager-bsdsource.patch
 
 BuildRequires:	openvas-libraries-devel >= 7.0
-BuildRequires:	cmake >= 2.6.0
+BuildRequires:	cmake >= 2.8
 BuildRequires:	glib2-devel
 BuildRequires:	sqlite-devel
 BuildRequires:	gnutls-devel
@@ -67,7 +63,7 @@ a SQL database (sqlite-based) where all configuration and scan result data is
 centrally stored.
 
 %prep
-%setup -q
+%autosetup -n %{name}-%{version}
 #%patch0 -p1 -b .notused
 %patch1 -p1 -b .pki
 %patch2 -p1 -b .gpgerror
