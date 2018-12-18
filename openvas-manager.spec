@@ -6,7 +6,7 @@ Summary:	Manager Module for the Open Vulnerability Assessment System (OpenVAS)
 
 License:	GPLv2+
 URL:		http://www.openvas.org
-Source0:	https://github.com/greenbone/gvmd/archive/v7.0.3.tar.gz
+Source0:        %{name}-%{version}.tar.gz
 %if 0%{?rhel} >= 7 || 0%{?fedora} > 15
 Source4:	https://raw.githubusercontent.com/diverops/openvas-manager/master/openvas-manager.service
 %else
