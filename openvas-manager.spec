@@ -63,7 +63,7 @@ a SQL database (sqlite-based) where all configuration and scan result data is
 centrally stored.
 
 %prep
-%autosetup -n %{name}-%{version}
+%autosetup -n v%{version}
 #%patch0 -p1 -b .notused
 %patch1 -p1 -b .pki
 %patch2 -p1 -b .gpgerror
